@@ -1,0 +1,65 @@
+/* Fondo de galaxia */
+.galaxy-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("/galaxia.jpg") center/cover no-repeat,
+    radial-gradient(circle, #000428, #004e92);
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Movimiento de estrellas siguiendo el mouse */
+.star-follow {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 10px white;
+  animation: fadeOut 1s linear forwards;
+}
+
+/* Desvanecer las estrellas */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+.galaxy-menu {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.star-projects {
+  top: 10%;
+  left: 20%;
+}
+
+.star-description {
+  top: 40%;
+  left: 70%;
+}
+
+.star-social {
+  top: 70%;
+  left: 15%;
+}
+
+.star-memoryGame {
+  top: 25%;
+  left: 50%;
+}
+
+.star-chatbot {
+  top: 60%;
+  left: 80%;
+}

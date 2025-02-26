@@ -1,0 +1,18 @@
+/* Estilo del texto principal */
+.galaxy-text {
+  flex: auto;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Efecto de neón */
+
