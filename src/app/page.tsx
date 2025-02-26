@@ -1,6 +1,6 @@
 import Background from "../components/background/background";
 import GalaxyMenu from "@/components/galaxyMenu/galaxyMenu";
-import "../styles/text.css";
+import "../styles/text..module.css";
 
 const HomePage = () => {
   return (

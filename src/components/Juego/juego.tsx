@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import "../../styles/memoryGame.css";
+import "../../styles/memoryGame.module.css";
 
 interface Card {
   id: number;

@@ -1,0 +1,95 @@
+/* Fondo de galaxia */
+.galaxyBackground {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("/galaxia.jpg") center/cover no-repeat,
+    radial-gradient(circle, #000428, #004e92);
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Resto de estilos de la galaxia (orbita, etc.) */
+.galaxyMenu {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.star-position {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: orbit 180s linear infinite;
+}
+
+/* Radios de órbita y duraciones para cada tipo */
+.star-description {
+  --orbit-radius: 40px;
+  animation-duration: 180s;
+}
+
+.star-projects {
+  --orbit-radius: 100px;
+  animation-duration: 150s;
+}
+
+
+.star-social {
+  --orbit-radius: 190px;
+  animation-duration: 240s;
+}
+
+.star-memoryGame {
+  --orbit-radius: 270px;
+  animation-duration: 240s;
+}
+
+.star-chatbot {
+  --orbit-radius: 320px;
+  animation-duration: 200s;
+}
+
+/* Animación de órbita */
+@keyframes orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg)
+      translateX(var(--orbit-radius)) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg)
+      translateX(var(--orbit-radius)) rotate(-360deg);
+  }
+}
+
+/* Estrella fugaz: ahora cruza la pantalla y sale desde una posición aleatoria */
+.shootingStar {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: white;
+  box-shadow: 0 0 8px white;
+  opacity: 0;
+  animation: shootingStar 5s linear forwards;
+}
+
+/* Animación para la estrella fugaz: se desplaza en diagonal */
+@keyframes shootingStar {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(45deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(100vw, 100vh) rotate(45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(100vw, 100vh) rotate(45deg);
+  }
+}

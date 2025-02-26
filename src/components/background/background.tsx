@@ -1,31 +1,26 @@
 "use client";
-
 import { useEffect } from "react";
-import "../../styles/galaxy.css";
+import styles from "../../styles/galaxy.module.css";
 
 const Background = () => {
   useEffect(() => {
-    const createStar = (e: MouseEvent) => {
+    const createShootingStar = () => {
       const star = document.createElement("div");
-      star.className = "star-follow";
+      star.className = styles.shootingStar; // Usa la clase del CSS Module
+      // Posición aleatoria en la parte superior de la pantalla
+      star.style.left = `${Math.random() * window.innerWidth}px`;
+      star.style.top = "0px";
       document.body.appendChild(star);
-
-      star.style.left = `${e.clientX}px`;
-      star.style.top = `${e.clientY}px`;
-
-      setTimeout(() => {
-        star.remove();
-      }, 1000);
+      // Remueve la estrella después de 5 segundos
+      setTimeout(() => star.remove(), 5000);
     };
 
-    document.addEventListener("mousemove", createStar);
-
-    return () => {
-      document.removeEventListener("mousemove", createStar);
-    };
+    // Crea una estrella fugaz cada 3 segundos (ajusta el intervalo a tu gusto)
+    const interval = setInterval(createShootingStar, 3000);
+    return () => clearInterval(interval);
   }, []);
 
-  return <div className="galaxy-background"></div>;
+  return <div className={styles.galaxyBackground}></div>;
 };
 
 export default Background;

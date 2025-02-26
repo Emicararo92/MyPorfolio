@@ -1,6 +1,6 @@
 import React from "react";
 import MemoryGame from "./juego"; // Asegúrate de que la ruta sea correcta
-import "./memoryGameModal.css";
+import "../../styles/memoryGame.module.css";
 
 interface MemoryGameModalProps {
   isOpen: boolean;
