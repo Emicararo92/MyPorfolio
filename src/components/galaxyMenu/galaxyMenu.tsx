@@ -23,27 +23,27 @@ interface StarData {
 const orbitStars: StarData[] = [
   {
     type: "projects",
-    title: "Proyectos",
-    description: "Descubre mis proyectos galácticos.",
+    title: "Projects",
+    description: "Discover my galactic projects.",
     links: [
-      { text: "Proyecto 1", url: "https://github.com/tu_usuario/proyecto1" },
-      { text: "Proyecto 2", url: "https://github.com/tu_usuario/proyecto2" },
+      { text: "Project 1", url: "https://github.com/your_username/project1" },
+      { text: "Project 2", url: "https://github.com/your_username/project2" },
     ],
   },
   {
     type: "description",
     title: "About me",
     description:
-      "I’ve always been curious about how websites work and how a few lines of code can bring ideas to life. My journey into web development started with small personal projects, and over the past two years, I’ve worked on various projects that taught me to build clean user interfaces and effective backend solutions. Turning ideas into something tangible is what drives me.",
+      "I've always been curious about how websites work and how a few lines of code can bring ideas to life. My journey into web development began with small personal projects, and over the past two years, I've built various projects that taught me to create clean interfaces and effective backend solutions. Turning ideas into reality drives me.",
   },
   {
     type: "social",
-    title: "Redes Sociales",
+    title: "Social Networks",
     description: "Connect with me on LinkedIn and Twitter.",
   },
   {
     type: "memoryGame",
-    title: "Juego de Memoria",
+    title: "Memory Game",
     description: "Test your memory with my interactive memory game.",
     customContent: <MemoryGame />,
   },
@@ -83,8 +83,7 @@ const GalaxyMenu: React.FC = () => {
         </div>
       ))}
 
-      {/* Shooting star (efecto de estrella fugaz) */}
-      <div className={galaxyStyles.shootingStar}></div>
+      {/* Shooting star (si lo deseas, se genera en el componente Background) */}
 
       {/* Modal centrado */}
       <Modal

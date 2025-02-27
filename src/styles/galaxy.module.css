@@ -9,51 +9,74 @@
   z-index: -1;
 }
 
-/* Resto de estilos de la galaxia (orbita, etc.) */
+/* Contenedor principal para GalaxyMenu */
 .galaxyMenu {
   position: relative;
   width: 100%;
   height: 100vh;
 }
 
+/* Base para las estrellas orbitantes: se posicionan inicialmente en el centro
+   con transform-origin definido para que todas orbiten alrededor de (50vw, 30vh) */
 .star-position {
   position: absolute;
-  top: 50%;
+  /* Valor por defecto, se sobreescribe en cada tipo */
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  transform-origin: 50% 50%;
-  animation: orbit 180s linear infinite;
+  transform-origin: 50vw 30vh;
+  /* Animación base (se sobreescribe el nombre y duración en cada clase) */
+  animation: orbit 60s linear infinite;
 }
 
-/* Radios de órbita y duraciones para cada tipo */
-.star-description {
-  --orbit-radius: 40px;
-  animation-duration: 180s;
-}
+/* Para que cada estrella tenga un punto de partida vertical distinto y se queden dentro
+   de la pantalla, sobrescribimos la propiedad top en cada clase, usando !important para
+   asegurar la prioridad. También definimos la variable --orbit-radius para cada una. */
 
 .star-projects {
+  top: 25% !important;
+  left: 50%;
   --orbit-radius: 100px;
+  animation-name: orbitRight;
   animation-duration: 150s;
 }
 
+.star-description {
+  top: 35% !important;
+  left: 20%;
+  --orbit-radius: 200px;
+  animation-name: orbitLeft;
+  animation-duration: 180s;
+}
 
 .star-social {
-  --orbit-radius: 190px;
+  top: 30% !important;
+  left: 80%;
+  --orbit-radius: 200px;
+  animation-name: orbitRight;
   animation-duration: 240s;
 }
 
 .star-memoryGame {
-  --orbit-radius: 270px;
+  top: 40% !important;
+  left: 70%;
+  --orbit-radius: 250px;
+  animation-name: orbitLeft;
   animation-duration: 240s;
 }
 
 .star-chatbot {
-  --orbit-radius: 320px;
+  top: 30% !important;
+  left: 60%;
+  --orbit-radius: 270px;
+  animation-name: orbitRight;
   animation-duration: 200s;
 }
 
-/* Animación de órbita */
-@keyframes orbit {
+/* Animaciones personalizadas */
+
+/* Trayectoria hacia la derecha */
+@keyframes orbitRight {
   from {
     transform: translate(-50%, -50%) rotate(0deg)
       translateX(var(--orbit-radius)) rotate(0deg);
@@ -64,7 +87,19 @@
   }
 }
 
-/* Estrella fugaz: ahora cruza la pantalla y sale desde una posición aleatoria */
+/* Trayectoria hacia la izquierda */
+@keyframes orbitLeft {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg)
+      translateX(calc(-1 * var(--orbit-radius))) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg)
+      translateX(calc(-1 * var(--orbit-radius))) rotate(-360deg);
+  }
+}
+
+/* Estrella fugaz: permanece igual */
 .shootingStar {
   position: fixed;
   width: 3px;
@@ -75,7 +110,6 @@
   animation: shootingStar 5s linear forwards;
 }
 
-/* Animación para la estrella fugaz: se desplaza en diagonal */
 @keyframes shootingStar {
   0% {
     opacity: 0;
@@ -91,5 +125,29 @@
   100% {
     opacity: 0;
     transform: translate(100vw, 100vh) rotate(45deg);
+  }
+}
+
+/* Partículas (opcional) */
+.particle {
+  position: fixed;
+  background: red;
+  border-radius: 50%;
+  opacity: 0;
+  width: 2px;
+  height: 2px;
+  animation: particleFlicker 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes particleFlicker {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
   }
 }
