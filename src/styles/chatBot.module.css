@@ -1,0 +1,164 @@
+.chatbotWrapper {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 50;
+}
+
+.open {
+  width: 320px;
+}
+
+.closed {
+  width: 64px;
+}
+
+.chatbotButton {
+  background: linear-gradient(135deg, #0c0a23, #4f67d5);
+  border-radius: 50%;
+  padding: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chatbotButton:hover {
+  transform: scale(1.1);
+}
+
+.bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Contenedor del chatbot con estilo de galaxia y transparencia */
+.chatbotContainer {
+  position: relative;
+  background: rgba(12, 10, 35, 0.8); /* Fondo oscuro con transparencia */
+  backdrop-filter: blur(8px); /* Efecto difuminado */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin-top: 8px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Botón para cerrar el chat */
+.chatbotCloseBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.chatbotCloseBtn:hover {
+  color: #ff4d4d;
+}
+
+/* Selector de idioma con estilo más moderno */
+.languageSelector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.languageBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 12px;
+  margin: 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, border 0.3s;
+}
+
+.languageBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid white;
+}
+
+.active {
+  background: #4f67d5;
+  color: white;
+}
+
+/* Contenedor de mensajes con efecto de transparencia */
+.messagesContainer {
+  height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+/* Mensajes del bot y usuario con sombras y bordes más suaves */
+.botMessage {
+  background: rgba(79, 103, 213, 0.8);
+  text-align: left;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.userMessage {
+  background: rgba(34, 43, 131, 0.8);
+  text-align: right;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  align-self: flex-end;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Opciones del chatbot con bordes futuristas */
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.optionButton {
+  background: rgba(34, 43, 131, 0.8);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  padding: 6px 12px;
+  margin: 4px;
+  cursor: pointer;
+  transition: background 0.3s, border 0.3s;
+}
+
+.optionButton:hover {
+  background: rgba(79, 103, 213, 0.8);
+  border: 1px solid white;
+}
+
+/* Enlace dentro del chatbot */
+.chatbotLink {
+  color: #4f67d5;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.chatbotLink:hover {
+  color: #8ea6ff;
+}

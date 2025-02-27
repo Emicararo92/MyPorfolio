@@ -1,53 +1,60 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect, JSX } from "react";
 import { AiOutlineMessage } from "react-icons/ai";
-import Image from "next/image";
+import styles from "../../styles/chatBot.module.css"; // Importamos el CSS
 
-const Chatbot: React.FC = () => {
+// Se agregan props opcionales para integración en el modal
+interface ChatbotProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ isOpen: propIsOpen, onClose }) => {
+  // Si se pasa onClose, asumimos que se usa en modal y mostramos el chat; de lo contrario, usamos el estado interno.
   const [isOpen, setIsOpen] = useState(false);
+  const actualIsOpen = onClose ? true : isOpen;
+
   const [messages, setMessages] = useState<
-    {
-      from: string;
-      text: string | JSX.Element;
-    }[]
+    { from: string; text: string | JSX.Element }[]
   >([]);
   const [bounce, setBounce] = useState(false);
   const [language, setLanguage] = useState("es");
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen) {
-      const welcomeMessage = {
-        from: "bot",
-        text:
-          language === "es"
-            ? "¡Hola! Soy Emiliano Cararo, desarrollador Front End. ¿En qué puedo ayudarte hoy?"
-            : "Hello! I'm Emiliano Cararo, Front End Developer. How can I help you today?",
-      };
-      setMessages([welcomeMessage]);
+    if (!onClose) {
+      setIsOpen(!isOpen);
+      if (!isOpen) {
+        const welcomeMessage = {
+          from: "bot",
+          text:
+            language === "es"
+              ? "¡Hola! Soy Emiliano Cararo, desarrollador Front End. ¿En qué puedo ayudarte hoy?"
+              : "Hello! I'm Emiliano Cararo, Front End Developer. How can I help you today?",
+        };
+        setMessages([welcomeMessage]);
+      }
     }
   };
 
   const handleUserSelection = (selection: string) => {
     const newMessage = { from: "user", text: selection };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
-
     const botResponse = handleBotResponse(selection);
     setMessages((prevMessages) => [...prevMessages, botResponse]);
   };
 
   const handleBotResponse = (selection: string) => {
     let botText: string | JSX.Element;
-
     switch (selection) {
       case language === "es"
         ? "¿Cuáles son tus tecnologías?"
         : "What technologies do you use?":
         botText =
           language === "es"
-            ? "Trabajo con HTML, CSS, JavaScript, React, Next.js, TypeScript y Tailwind CSS."
-            : "I work with HTML, CSS, JavaScript, React, Next.js, TypeScript, and Tailwind CSS.";
+            ? "Trabajo con HTML, CSS, JavaScript, React, Next.js, TypeScript y CSS puro."
+            : "I work with HTML, CSS, JavaScript, React, Next.js, TypeScript, and pure CSS.";
         break;
       case language === "es"
         ? "¿Tienes algún proyecto interesante?"
@@ -59,7 +66,7 @@ const Chatbot: React.FC = () => {
               : "Yes! I have several projects. You can see them in my projects section."}
             <button
               onClick={() => (window.location.href = "/Proyectos")}
-              className="text-blue-500 underline"
+              className={styles.chatbotLink}
             >
               {language === "es" ? "Ver Proyectos" : "View Projects"}
             </button>
@@ -78,7 +85,7 @@ const Chatbot: React.FC = () => {
               href="https://github.com/emicararo92"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500"
+              className={styles.chatbotLink}
             >
               GitHub
             </a>
@@ -87,12 +94,15 @@ const Chatbot: React.FC = () => {
               href="https://www.linkedin.com/in/emiliano-cararo-b06862233"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500"
+              className={styles.chatbotLink}
             >
               LinkedIn
             </a>
             ,{" "}
-            <a href="mailto:tu-email@example.com" className="text-blue-500">
+            <a
+              href="mailto:tu-email@example.com"
+              className={styles.chatbotLink}
+            >
               {language === "es" ? "Correo" : "Email"}
             </a>
           </>
@@ -112,7 +122,6 @@ const Chatbot: React.FC = () => {
             ? "Lo siento, no entendí tu pregunta. Por favor elige una opción."
             : "I'm sorry, I didn't understand your question. Please choose an option.";
     }
-
     return { from: "bot", text: botText };
   };
 
@@ -120,127 +129,102 @@ const Chatbot: React.FC = () => {
     const interval = setInterval(() => {
       setBounce((prev) => !prev);
     }, 6000);
-
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className={`fixed bottom-4 right-4 z-50 ${isOpen ? "w-80" : "w-16"}`}>
-      <button
-        onClick={toggleChat}
-        className={`bg-gradient-to-r from-[#0c0a23] to-[#4f67d5] text-white rounded-full p-3 shadow-lg transition duration-300 ease-in-out transform hover:scale-105 ${
-          bounce ? "animate-bounce" : ""
-        }`}
-      >
-        <AiOutlineMessage size={24} color="white" />
-      </button>
-      {isOpen && (
-        <div className="mt-2 bg-gradient-to-r from-[#0c0a23] to-[#4f67d5] p-4 shadow-lg rounded-lg overflow-hidden">
-          <div className="flex justify-center mb-2">
-            <Image
-              src="/eeuu.png"
-              alt="English"
-              width={24}
-              height={24}
-              className="cursor-pointer m-1"
+    <div
+      className={`${styles.chatbotWrapper} ${
+        actualIsOpen ? styles.open : styles.closed
+      }`}
+    >
+      {!onClose && (
+        <button
+          onClick={toggleChat}
+          className={`${styles.chatbotButton} ${bounce ? styles.bounce : ""}`}
+        >
+          <AiOutlineMessage size={24} color="white" />
+        </button>
+      )}
+      {actualIsOpen && (
+        <div className={styles.chatbotContainer}>
+          {/* Botón para cerrar el chat */}
+          {onClose && (
+            <button onClick={onClose} className={styles.chatbotCloseBtn}>
+              ✖
+            </button>
+          )}
+          {/* Efecto de estrellas fugaces */}
+          <div className={styles.shootingStars}></div>
+          <div className={styles.languageSelector}>
+            <button
+              className={`${styles.languageBtn} ${
+                language === "en" ? styles.active : ""
+              }`}
               onClick={() => {
                 setLanguage("en");
-                const welcomeMessage = {
-                  from: "bot",
-                  text: "Hello! I'm Emiliano Cararo, Front End Developer. How can I help you today?",
-                };
-                setMessages([welcomeMessage]);
+                setMessages([
+                  {
+                    from: "bot",
+                    text: "Hello! I'm Emiliano Cararo, Front End Developer. How can I help you today?",
+                  },
+                ]);
               }}
-            />
-            <Image
-              src="/españa.png"
-              alt="Español"
-              width={24}
-              height={24}
-              className="cursor-pointer m-1"
+            >
+              EN
+            </button>
+            <button
+              className={`${styles.languageBtn} ${
+                language === "es" ? styles.active : ""
+              }`}
               onClick={() => {
                 setLanguage("es");
-                const welcomeMessage = {
-                  from: "bot",
-                  text: "¡Hola! Soy Emiliano Cararo, desarrollador Front End. ¿En qué puedo ayudarte hoy?",
-                };
-                setMessages([welcomeMessage]);
+                setMessages([
+                  {
+                    from: "bot",
+                    text: "¡Hola! Soy Emiliano Cararo, desarrollador Front End. ¿En qué puedo ayudarte hoy?",
+                  },
+                ]);
               }}
-            />
+            >
+              ES
+            </button>
           </div>
-          <div className="h-64 overflow-y-auto border border-gray-300 p-2">
+          <div className={styles.messagesContainer}>
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={msg.from === "user" ? "text-right" : "text-left"}
+                className={
+                  msg.from === "user" ? styles.userMessage : styles.botMessage
+                }
               >
-                <span
-                  className={`block p-2 rounded ${
-                    msg.from === "user" ? "bg-secondary" : "bg-tertiary"
-                  }`}
-                >
-                  {msg.text}
-                </span>
+                {msg.text}
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap mt-2 justify-center">
-            <button
-              onClick={() =>
-                handleUserSelection(
-                  language === "es"
-                    ? "¿Cuáles son tus tecnologías?"
-                    : "What technologies do you use?"
-                )
-              }
-              className="bg-[#222b83] text-white rounded text-xs px-2 py-1 m-1 transition duration-300 hover:bg-[#0c0a23]"
-            >
-              {language === "es"
+          <div className={styles.optionsContainer}>
+            {[
+              language === "es"
                 ? "¿Cuáles son tus tecnologías?"
-                : "What technologies do you use?"}
-            </button>
-            <button
-              onClick={() =>
-                handleUserSelection(
-                  language === "es"
-                    ? "¿Tienes algún proyecto interesante?"
-                    : "Do you have any interesting projects?"
-                )
-              }
-              className="bg-[#222b83] text-white rounded text-xs px-2 py-1 m-1 transition duration-300 hover:bg-[#0c0a23]"
-            >
-              {language === "es"
+                : "What technologies do you use?",
+              language === "es"
                 ? "¿Tienes algún proyecto interesante?"
-                : "Do you have any interesting projects?"}
-            </button>
-            <button
-              onClick={() =>
-                handleUserSelection(
-                  language === "es"
-                    ? "¿Cómo puedo contactarte?"
-                    : "How can I contact you?"
-                )
-              }
-              className="bg-[#222b83] text-white rounded text-xs px-2 py-1 m-1 transition duration-300 hover:bg-[#0c0a23]"
-            >
-              {language === "es"
+                : "Do you have any interesting projects?",
+              language === "es"
                 ? "¿Cómo puedo contactarte?"
-                : "How can I contact you?"}
-            </button>
-            <button
-              onClick={() =>
-                handleUserSelection(
-                  language === "es"
-                    ? "Gracias, eso es todo."
-                    : "Thank you, that’s all."
-                )
-              }
-              className="bg-[#222b83] text-white rounded text-xs px-2 py-1 m-1 transition duration-300 hover:bg-[#0c0a23]"
-            >
-              {language === "es"
+                : "How can I contact you?",
+              language === "es"
                 ? "Gracias, eso es todo."
-                : "Thank you, that’s all."}
-            </button>
+                : "Thank you, that’s all.",
+            ].map((text) => (
+              <button
+                key={text}
+                onClick={() => handleUserSelection(text)}
+                className={styles.optionButton}
+              >
+                {text}
+              </button>
+            ))}
           </div>
         </div>
       )}

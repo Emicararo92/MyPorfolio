@@ -41,7 +41,7 @@
   animation-duration: 150s;
 }
 
-.star-description {
+.star-aboutMe {
   top: 35% !important;
   left: 20%;
   --orbit-radius: 200px;
@@ -60,7 +60,7 @@
 .star-memoryGame {
   top: 40% !important;
   left: 70%;
-  --orbit-radius: 250px;
+  --orbit-radius: 240px;
   animation-name: orbitLeft;
   animation-duration: 200s;
 }
@@ -68,7 +68,7 @@
 .star-chatbot {
   bottom: 100% !important;
   left: 60%;
-  --orbit-radius: 225px;
+  --orbit-radius: 215px;
   animation-name: orbitRight;
   animation-duration: 120s;
 }

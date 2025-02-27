@@ -1,0 +1,70 @@
+.aboutMeSection {
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7); /* Fondo oscuro translúcido */
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutMeTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+
+.contentLeft {
+  max-width: 600px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contentRight {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.sectionBox {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  width: 45%;
+  min-width: 300px;
+  backdrop-filter: blur(5px);
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+}
+
+.iconGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.iconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.iconItem:hover {
+  transform: scale(1.1);
+}
+
+.iconItem span {
+  margin-top: 8px;
+  font-size: 1rem;
+}

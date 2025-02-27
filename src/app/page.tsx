@@ -3,7 +3,7 @@ import GalaxyMenu from "@/components/galaxyMenu/galaxyMenu";
 import styles from "../styles/text..module.css";
 const HomePage = () => {
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen overflow-y-auto">
       <Background />
       <GalaxyMenu />
       {/* Contenedor de texto con pointer-events: none para que no bloquee clicks */}

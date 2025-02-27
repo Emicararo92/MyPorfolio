@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Modal from "react-modal";
 import StarIcon from "@/components/starIcon/starIcon";
 import Chatbot from "../ChatBot/chatbot";
 import MemoryGame from "../Juego/juego";
+import SocialNetworks from "../SocialNetworks/socialNetworks";
+import AboutMe from "../AboutMe/aboutMe"; // Importamos AboutMe
 import galaxyStyles from "../../styles/galaxy.module.css";
 import modalStyles from "../../styles/modal.module.css";
-
-// Configuramos react-modal para el cliente
-Modal.setAppElement("body");
 
 interface StarData {
   type: string;
@@ -31,15 +29,15 @@ const orbitStars: StarData[] = [
     ],
   },
   {
-    type: "description",
+    type: "aboutMe", // Usamos "aboutMe" para distinguir
     title: "About me",
-    description:
-      "I've always been curious about how websites work and how a few lines of code can bring ideas to life. My journey into web development began with small personal projects, and over the past two years, I've built various projects that taught me to create clean interfaces and effective backend solutions. Turning ideas into reality drives me.",
+    customContent: <AboutMe />, // Se usará el componente AboutMe
   },
   {
     type: "social",
     title: "Social Networks",
-    description: "Connect with me on LinkedIn and Twitter.",
+    description: "",
+    customContent: <SocialNetworks />,
   },
   {
     type: "memoryGame",
@@ -49,24 +47,26 @@ const orbitStars: StarData[] = [
   },
   {
     type: "chatbot",
-    title: "Chatbot",
+    title: "Chat",
     description: "Interact with my chatbot for a quick chat.",
-    customContent: <Chatbot />,
   },
 ];
 
 const GalaxyMenu: React.FC = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedStar, setSelectedStar] = useState<StarData | null>(null);
+  const [activeStar, setActiveStar] = useState<StarData | null>(null);
+  const [chatbotOpen, setChatbotOpen] = useState(false);
 
-  const openModal = (star: StarData) => {
-    setSelectedStar(star);
-    setModalIsOpen(true);
+  const openStar = (star: StarData) => {
+    if (star.type === "chatbot") {
+      setChatbotOpen(true);
+    } else {
+      setActiveStar(star);
+    }
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setSelectedStar(null);
+  const closeActive = () => {
+    setActiveStar(null);
+    setChatbotOpen(false);
   };
 
   return (
@@ -77,67 +77,54 @@ const GalaxyMenu: React.FC = () => {
           className={`${galaxyStyles["star-position"]} ${
             galaxyStyles[`star-${star.type}`]
           }`}
-          onClick={() => openModal(star)}
+          onClick={() => openStar(star)}
         >
           <StarIcon title={star.title} />
         </div>
       ))}
 
-      {/* Shooting star (si lo deseas, se genera en el componente Background) */}
+      {/* Contenedor inline para el contenido de la estrella seleccionada */}
+      {activeStar && (
+        <div className={modalStyles["inline-aboutme"]}>
+          <button
+            onClick={closeActive}
+            className={modalStyles["inline-close-btn"]}
+          >
+            Close
+          </button>
+          <h2
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              marginBottom: "10px",
+            }}
+          >
+            {activeStar.title}
+          </h2>
+          {activeStar.description && (
+            <p style={{ marginBottom: "10px" }}>{activeStar.description}</p>
+          )}
+          {activeStar.links && (
+            <ul style={{ marginBottom: "10px" }}>
+              {activeStar.links.map((link, idx) => (
+                <li key={idx}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    style={{ color: "blue", textDecoration: "underline" }}
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+          {activeStar.customContent && activeStar.customContent}
+        </div>
+      )}
 
-      {/* Modal centrado */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Star Modal"
-        className={modalStyles["modal-content"]}
-        overlayClassName={modalStyles["modal-overlay"]}
-      >
-        {selectedStar && (
-          <div style={{ padding: "20px" }}>
-            <h2 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-              {selectedStar.title}
-            </h2>
-            {selectedStar.description && (
-              <p style={{ marginTop: "10px" }}>{selectedStar.description}</p>
-            )}
-            {selectedStar.links && (
-              <ul style={{ marginTop: "15px" }}>
-                {selectedStar.links.map((link, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      style={{ color: "blue", textDecoration: "underline" }}
-                    >
-                      {link.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {selectedStar.customContent && (
-              <div style={{ marginTop: "15px" }}>
-                {selectedStar.customContent}
-              </div>
-            )}
-            <button
-              onClick={closeModal}
-              style={{
-                marginTop: "15px",
-                padding: "10px 20px",
-                background: "#4f67d5",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Close
-            </button>
-          </div>
-        )}
-      </Modal>
+      {/* Renderizado directo del Chatbot inline */}
+      {chatbotOpen && <Chatbot isOpen={true} onClose={closeActive} />}
     </div>
   );
 };
