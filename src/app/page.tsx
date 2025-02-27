@@ -1,9 +1,9 @@
 import Background from "../components/background/background";
 import GalaxyMenu from "@/components/galaxyMenu/galaxyMenu";
-import styles from "../styles/text..module.css";
+import styles from "../styles/text.module.css";
 const HomePage = () => {
   return (
-    <div className="relative w-screen h-screen overflow-y-auto">
+    <div className="relative w-screen h-screen overflow-hidden">
       <Background />
       <GalaxyMenu />
       {/* Contenedor de texto con pointer-events: none para que no bloquee clicks */}

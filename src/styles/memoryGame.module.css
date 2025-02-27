@@ -1,92 +1,74 @@
-/* Contenedor principal con fondo galáctico */
-.memory-game-container {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  padding: 2rem;
-  background: url("/galaxia.jpg") center/cover no-repeat,
-    radial-gradient(circle, #000428, #004e92);
-  background-blend-mode: multiply;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Cabecera llamativa */
-.memory-game-header {
-  font-size: 3rem;
-  color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  margin-bottom: 1rem;
-}
-
-/* Descripción del juego */
-.memory-game-description {
-  font-size: 1.2rem;
-  color: #e0e0e0;
+.memoryGameContainer {
+  position: relative; /* Asegura que se mantenga en el flujo de la página */
   text-align: center;
-  max-width: 700px;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.9); /* Fondo oscuro con opacidad */
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  z-index: 10;
 }
 
-/* Temporizador */
-.memory-game-timer {
-  font-size: 1.8rem;
-  color: #ffffff;
-  margin-bottom: 1.5rem;
+.memoryGameHeader {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-/* Grilla de cartas */
-.memory-game-grid {
+.memoryGameDescription {
+  margin-bottom: 10px;
+}
+
+.memoryGameTimer {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.memoryGameGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-/* Estilos para cada carta */
-.memory-game-card {
-  width: 100px;
-  height: 100px;
-  border: 2px solid #4f67d5;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #0c0a23, #222b83);
-  display: flex;
-  align-items: center;
+  gap: 10px;
   justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.memoryGameCard {
+  width: 80px;
+  height: 80px;
+  background: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.3s, background 0.3s;
-  perspective: 1000px;
+  transition: transform 0.3s ease-in-out, background 0.3s;
 }
 
-/* Carta volteada o emparejada */
-.memory-game-card.flipped {
-  background: #4f67d5;
-  transform: scale(1.05);
+.memoryGameCard.flipped {
+  background: #444;
 }
 
-/* Icono de la carta */
-.card-content {
-  font-size: 2.5rem;
-  color: #ffffff;
+.cardContent {
+  font-size: 30px;
+  color: white;
 }
 
-/* Botón de reinicio */
-.memory-game-button {
-  background: #4f67d5;
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.2rem;
+.memoryGameButton {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 
-.memory-game-button:hover {
-  background: #222b83;
+.memoryGameButton:hover {
+  background-color: #0056b3;
 }

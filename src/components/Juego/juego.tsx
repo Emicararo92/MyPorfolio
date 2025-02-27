@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaReact,
   FaNode,
@@ -13,14 +13,16 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import "../../styles/memoryGame.module.css";
+import styles from "../../styles/memoryGame.module.css"; 
+import { JSX } from "react/jsx-runtime";
 
 interface Card {
   id: number;
   icon: JSX.Element;
+  matched: boolean;
 }
 
-const icons: Card[] = [
+const iconSet = [
   { id: 1, icon: <FaReact /> },
   { id: 2, icon: <FaNode /> },
   { id: 3, icon: <FaPython /> },
@@ -29,84 +31,78 @@ const icons: Card[] = [
   { id: 6, icon: <FaCss3Alt /> },
   { id: 7, icon: <FaGit /> },
   { id: 8, icon: <FaDocker /> },
-  { id: 9, icon: <FaReact /> },
-  { id: 10, icon: <FaNode /> },
-  { id: 11, icon: <FaPython /> },
-  { id: 12, icon: <FaJava /> },
-  { id: 13, icon: <FaHtml5 /> },
-  { id: 14, icon: <FaCss3Alt /> },
-  { id: 15, icon: <FaGit /> },
-  { id: 16, icon: <FaDocker /> },
 ];
+
+// Función para generar cartas duplicadas y aleatorizadas
+const generateCards = () => {
+  const duplicatedIcons = [...iconSet, ...iconSet]; // Se duplican para hacer pares
+  return duplicatedIcons
+    .map((card, index) => ({ ...card, id: index, matched: false }))
+    .sort(() => Math.random() - 0.5); // Se mezclan aleatoriamente
+};
 
 const MemoryGame = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [disabled, setDisabled] = useState(false);
-  const [gameTime, setGameTime] = useState<number>(0);
-  const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameTime, setGameTime] = useState(0);
+  const [gameStarted, setGameStarted] = useState(false);
 
+  // Inicializar el juego con cartas mezcladas
   useEffect(() => {
-    const shuffledCards = [...icons].sort(() => Math.random() - 0.5);
-    setCards(shuffledCards);
+    setCards(generateCards());
   }, []);
 
-  // Iniciar el temporizador cuando el juego comienza
+  // Temporizador del juego
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (gameStarted && matchedCards.length < cards.length) {
-      timer = setInterval(() => {
-        setGameTime((prevTime) => prevTime + 1);
-      }, 1000);
+    if (gameStarted) {
+      timer = setInterval(() => setGameTime((prev) => prev + 1), 1000);
     }
     return () => clearInterval(timer);
-  }, [gameStarted, matchedCards.length, cards.length]);
+  }, [gameStarted]);
 
+  // Lógica para voltear cartas
   const handleCardClick = (id: number) => {
+    if (flippedCards.includes(id) || matchedCards.includes(id)) return;
     if (!gameStarted) setGameStarted(true);
-    if (disabled || flippedCards.includes(id) || matchedCards.includes(id))
-      return;
 
-    setFlippedCards((prev) => [...prev, id]);
+    const updatedFlippedCards = [...flippedCards, id];
+    setFlippedCards(updatedFlippedCards);
 
-    if (flippedCards.length === 1) {
-      setDisabled(true);
-      const firstCard = flippedCards[0];
-      const secondCard = id;
-
-      const firstCardIndex = cards.findIndex((card) => card.id === firstCard);
-      const secondCardIndex = cards.findIndex((card) => card.id === secondCard);
-
-      if (
-        cards[firstCardIndex].icon.type === cards[secondCardIndex].icon.type
-      ) {
-        setMatchedCards((prev) => [...prev, firstCard, secondCard]);
-        setTimeout(() => {
-          resetFlippedCards();
-          if (matchedCards.length + 2 === cards.length) {
-            Swal.fire({
-              title: "Congratulations!",
-              text: `You have won in ${gameTime} seconds! 🎊`,
-              icon: "success",
-              confirmButtonText: "OK",
-            });
-          }
-        }, 1500);
-      } else {
-        setTimeout(() => resetFlippedCards(), 1000);
-      }
+    if (updatedFlippedCards.length === 2) {
+      setTimeout(() => checkMatch(updatedFlippedCards), 1000);
     }
   };
 
-  const resetFlippedCards = () => {
+  // Verificar si las cartas coinciden
+  const checkMatch = (flipped: number[]) => {
+    const [firstId, secondId] = flipped;
+    const firstCard = cards[firstId];
+    const secondCard = cards[secondId];
+
+    if (firstCard.icon.type === secondCard.icon.type) {
+      setMatchedCards((prev) => [...prev, firstId, secondId]);
+
+      // Comprobar si el jugador ganó
+      if (matchedCards.length + 2 === cards.length) {
+        setTimeout(() => {
+          Swal.fire({
+            title: "🎉 Congratulations!",
+            text: `You completed the game in ${gameTime} seconds!`,
+            icon: "success",
+            confirmButtonText: "Play Again",
+          }).then(() => handleRestart());
+        }, 500);
+      }
+    }
+
     setFlippedCards([]);
-    setDisabled(false);
   };
 
+  // Reiniciar el juego
   const handleRestart = () => {
-    const shuffledCards = [...icons].sort(() => Math.random() - 0.5);
-    setCards(shuffledCards);
+    setCards(generateCards());
     setMatchedCards([]);
     setFlippedCards([]);
     setGameTime(0);
@@ -114,48 +110,33 @@ const MemoryGame = () => {
   };
 
   return (
-    <div className="memory-game-container">
-      <h1 className="memory-game-header">Memory Game</h1>
-      <p className="memory-game-description">
-        In programming, memory is crucial for recalling patterns, syntax, and
-        solutions to common problems. A good developer can store and organize a
-        lot of information in their mind while working, which enhances
-        efficiency and problem-solving capabilities.
+    <div className={styles.memoryGameContainer}>
+      <h1 className={styles.memoryGameHeader}>Memory Game</h1>
+      <p className={styles.memoryGameDescription}>
+        Test your memory with a fun programming-themed game!
       </p>
-      <div className="memory-game-timer">Time: {gameTime}s</div>
+      <div className={styles.memoryGameTimer}>Time: {gameTime}s</div>
 
-      <div className="memory-game-grid">
+      <div className={styles.memoryGameGrid}>
         {cards.map((card) => (
           <motion.div
             key={card.id}
-            onClick={() => handleCardClick(card.id)}
-            initial={{ scale: 1 }}
-            animate={{
-              scale:
-                flippedCards.includes(card.id) || matchedCards.includes(card.id)
-                  ? 1
-                  : 0.95,
-              rotateY:
-                flippedCards.includes(card.id) || matchedCards.includes(card.id)
-                  ? 0
-                  : 180,
-            }}
-            transition={{ duration: 0.5 }}
-            className={`memory-game-card ${
+            className={`${styles.memoryGameCard} ${
               flippedCards.includes(card.id) || matchedCards.includes(card.id)
-                ? "flipped"
+                ? styles.flipped
                 : ""
             }`}
+            onClick={() => handleCardClick(card.id)}
           >
             {(flippedCards.includes(card.id) ||
               matchedCards.includes(card.id)) && (
-              <div className="card-content">{card.icon}</div>
+              <div className={styles.cardContent}>{card.icon}</div>
             )}
           </motion.div>
         ))}
       </div>
 
-      <button className="memory-game-button" onClick={handleRestart}>
+      <button className={styles.memoryGameButton} onClick={handleRestart}>
         Restart
       </button>
     </div>
