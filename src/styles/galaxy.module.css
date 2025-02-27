@@ -52,9 +52,9 @@
 .star-social {
   top: 30% !important;
   left: 80%;
-  --orbit-radius: 200px;
+  --orbit-radius: 170px;
   animation-name: orbitRight;
-  animation-duration: 240s;
+  animation-duration: 160s;
 }
 
 .star-memoryGame {
@@ -62,15 +62,15 @@
   left: 70%;
   --orbit-radius: 250px;
   animation-name: orbitLeft;
-  animation-duration: 240s;
+  animation-duration: 200s;
 }
 
 .star-chatbot {
-  top: 30% !important;
+  bottom: 100% !important;
   left: 60%;
-  --orbit-radius: 270px;
+  --orbit-radius: 225px;
   animation-name: orbitRight;
-  animation-duration: 200s;
+  animation-duration: 120s;
 }
 
 /* Animaciones personalizadas */
