@@ -90,3 +90,18 @@
   height: 90px;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+  .projectsContainer {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .videoContainer,
+  .verticalVideoContainer {
+    width: 100%;
+  }
+
+  .videoContainer video {
+    height: 200px;
+  }
+}

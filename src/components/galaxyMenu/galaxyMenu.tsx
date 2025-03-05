@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StarIcon from "@/components/starIcon/starIcon";
 import Chatbot from "../ChatBot/chatbot";
 import MemoryGame from "../Juego/juego";
 import SocialNetworks from "../SocialNetworks/socialNetworks";
-import AboutMe from "../AboutMe/aboutMe"; // Importamos AboutMe
+import AboutMe from "../AboutMe/aboutMe";
+import Projects from "../Projects/projects";
+import Navbar from "../NavBar/navBar"; // Importamos el nuevo componente Navbar
 import galaxyStyles from "../../styles/galaxy.module.css";
 import modalStyles from "../../styles/modal.module.css";
-import Projects from "../Projects/projects";
 
 interface StarData {
   type: string;
@@ -18,30 +19,15 @@ interface StarData {
   customContent?: React.ReactNode;
 }
 
-// Arreglo de estrellas orbitantes (incluyendo "About me")
 const orbitStars: StarData[] = [
-  {
-    type: "projects",
-    title: "Projects",
-    customContent: <Projects />,
-  },
-  {
-    type: "aboutMe", // Usamos "aboutMe" para distinguir
-    title: "About me",
-    customContent: <AboutMe />, // Se usará el componente AboutMe
-  },
+  { type: "projects", title: "Projects", customContent: <Projects /> },
+  { type: "aboutMe", title: "About me", customContent: <AboutMe /> },
   {
     type: "social",
     title: "Social Networks",
-    description: "",
     customContent: <SocialNetworks />,
   },
-  {
-    type: "memoryGame",
-    title: "Memory Game",
-    description: "Test your memory with my interactive memory game.",
-    customContent: <MemoryGame />,
-  },
+  { type: "memoryGame", title: "Memory Game", customContent: <MemoryGame /> },
   {
     type: "chatbot",
     title: "Chat",
@@ -52,6 +38,7 @@ const orbitStars: StarData[] = [
 const GalaxyMenu: React.FC = () => {
   const [activeStar, setActiveStar] = useState<StarData | null>(null);
   const [chatbotOpen, setChatbotOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const openStar = (star: StarData) => {
     if (star.type === "chatbot") {
@@ -66,21 +53,43 @@ const GalaxyMenu: React.FC = () => {
     setChatbotOpen(false);
   };
 
+  // Detectar si la vista es móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Ajusta el tamaño según el breakpoint que prefieras
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <div className={`${galaxyStyles.galaxyMenu} relative w-full h-full`}>
-      {orbitStars.map((star, index) => (
-        <div
-          key={index}
-          className={`${galaxyStyles["star-position"]} ${
-            galaxyStyles[`star-${star.type}`]
-          }`}
-          onClick={() => openStar(star)}
-        >
-          <StarIcon title={star.title} />
-        </div>
-      ))}
+      {isMobile ? (
+        // Mostrar la navbar en dispositivos móviles
+        <Navbar
+          openStar={(type) =>
+            openStar(orbitStars.find((star) => star.type === type)!)
+          }
+        />
+      ) : (
+        // Mostrar las estrellas en pantallas grandes
+        orbitStars.map((star, index) => (
+          <div
+            key={index}
+            className={`${galaxyStyles["star-position"]} ${
+              galaxyStyles[`star-${star.type}`]
+            }`}
+            onClick={() => openStar(star)}
+          >
+            <StarIcon title={star.title} />
+          </div>
+        ))
+      )}
 
-      {/* Contenedor inline para el contenido de la estrella seleccionada */}
+      {/* Mostrar contenido de la estrella activa */}
       {activeStar && (
         <div className={modalStyles["inline-aboutme"]}>
           <button
@@ -120,7 +129,7 @@ const GalaxyMenu: React.FC = () => {
         </div>
       )}
 
-      {/* Renderizado directo del Chatbot inline */}
+      {/* Mostrar el Chatbot inline */}
       {chatbotOpen && <Chatbot isOpen={true} onClose={closeActive} />}
     </div>
   );

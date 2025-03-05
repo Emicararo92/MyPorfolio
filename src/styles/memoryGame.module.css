@@ -1,15 +1,8 @@
 .memoryGameContainer {
-  position: relative; 
-  text-align: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.9); 
-  color: white;
+  background: rgba(0, 0, 0, 0.9);
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  width: 90%;
-  max-width: 500px;
-  margin: auto;
-  z-index: 1000;
 }
 
 .memoryGameHeader {
@@ -17,36 +10,20 @@
   font-weight: bold;
 }
 
-.memoryGameDescription {
-  margin-bottom: 10px;
-}
-
-.memoryGameTimer {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
 .memoryGameGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  justify-content: center;
-  align-items: center;
-  max-width: 400px;
-  margin: 0 auto;
 }
 
 .memoryGameCard {
-  width: 80px;
-  height: 80px;
   background: #222;
+  border-radius: 8px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out, background 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .memoryGameCard.flipped {
@@ -61,8 +38,6 @@
 .memoryGameButton {
   margin-top: 20px;
   padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
   background-color: #007bff;
   color: white;
   border: none;
@@ -71,4 +46,19 @@
 
 .memoryGameButton:hover {
   background-color: #0056b3;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .memoryGameGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .memoryGameHeader {
+    font-size: 18px;
+  }
+
+  .cardContent {
+    font-size: 24px;
+  }
 }
