@@ -1,6 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import styles from "../../styles/aboutMe.module.css";
@@ -17,9 +15,10 @@ import {
   SiNextdotjs,
   SiFigma,
   SiCanva,
-  SiPostman,
   SiNodedotjs,
 } from "react-icons/si";
+import { TbBrandReactNative } from "react-icons/tb";
+import { AiFillThunderbolt } from "react-icons/ai";
 import { IoLogoVercel } from "react-icons/io5";
 
 function AboutMe() {
@@ -85,6 +84,10 @@ function AboutMe() {
               <SiNodedotjs size={40} color="#8CC84B" />
               <span>Node.js</span>
             </div>
+            <div className={styles.iconItem}>
+              <TbBrandReactNative size={40} color="#61DAFB" />
+              <span>React Native</span>
+            </div>
           </div>
         </motion.div>
         <motion.div variants={itemVariants} className={styles.sectionBox}>
@@ -108,12 +111,14 @@ function AboutMe() {
             </div>
 
             <div className={styles.iconItem}>
-              <SiPostman size={40} color="#FF6C37" />
-              <span>Postman</span>
-            </div>
-            <div className={styles.iconItem}>
               <IoLogoVercel size={40} color="#000000" />
               <span>Vercel</span>
+            </div>
+
+            {/* Reemplazar Postman por Thunder Client */}
+            <div className={styles.iconItem}>
+              <AiFillThunderbolt size={40} color="#FF6C37" />
+              <span>Thunder Client</span>
             </div>
           </div>
         </motion.div>

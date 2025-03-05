@@ -1,6 +1,7 @@
 import Background from "../components/background/background";
 import GalaxyMenu from "@/components/galaxyMenu/galaxyMenu";
 import styles from "../styles/text.module.css";
+
 const HomePage = () => {
   return (
     <div className="relative w-screen h-screen overflow-hidden">

@@ -1,15 +1,15 @@
 .memoryGameContainer {
-  position: relative; /* Asegura que se mantenga en el flujo de la página */
+  position: relative; 
   text-align: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.9); /* Fondo oscuro con opacidad */
+  background: rgba(0, 0, 0, 0.9); 
   color: white;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   width: 90%;
   max-width: 500px;
   margin: auto;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .memoryGameHeader {

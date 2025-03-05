@@ -1,0 +1,92 @@
+.projectsContainer {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); /* Ajusta las columnas automáticamente */
+  gap: 30px;
+  margin-top: 50px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  overflow-y: auto; /* Agrega scroll vertical */
+  max-height: 85vh; /* Limita la altura máxima para hacer scroll */
+}
+
+.videoContainer {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  overflow: hidden;
+}
+
+.videoContainer h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px; /* Aseguramos margen consistente */
+  text-align: center;
+}
+
+.videoContainer video {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.videoContainer p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  text-align: center;
+  padding: 0 10px;
+  height: 100px; /* Permite un poco más de espacio para el texto */
+  overflow-y: auto;
+  max-width: 100%;
+}
+
+.verticalVideoContainer {
+  background-color: #ffffff; /* Fondo blanco para que coincida con el estilo de los demás */
+  padding: 20px;
+  border-radius: 10px; /* Borde redondeado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto 3D */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 100%;
+  height: auto;
+}
+
+.verticalVideoContainer video {
+  width: auto;
+  height: 300px; /* Ajusta el tamaño para videos verticales */
+  max-width: 100%;
+  border-radius: 8px; /* Asegura que los bordes sean redondeados */
+}
+
+.verticalVideoContainer h3 {
+  font-size: 1.1rem; /* Tamaño de fuente igual al de los videos horizontales */
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px; /* Igual margen que los otros títulos */
+  text-align: center;
+}
+
+.verticalVideoContainer p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+  text-align: center;
+  padding: 0 10px;
+  height: 90px;
+  overflow-y: auto;
+}

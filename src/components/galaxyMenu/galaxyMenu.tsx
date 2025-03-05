@@ -8,6 +8,7 @@ import SocialNetworks from "../SocialNetworks/socialNetworks";
 import AboutMe from "../AboutMe/aboutMe"; // Importamos AboutMe
 import galaxyStyles from "../../styles/galaxy.module.css";
 import modalStyles from "../../styles/modal.module.css";
+import Projects from "../Projects/projects";
 
 interface StarData {
   type: string;
@@ -22,11 +23,7 @@ const orbitStars: StarData[] = [
   {
     type: "projects",
     title: "Projects",
-    description: "Discover my galactic projects.",
-    links: [
-      { text: "Project 1", url: "https://github.com/your_username/project1" },
-      { text: "Project 2", url: "https://github.com/your_username/project2" },
-    ],
+    customContent: <Projects />,
   },
   {
     type: "aboutMe", // Usamos "aboutMe" para distinguir
