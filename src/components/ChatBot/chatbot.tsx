@@ -53,7 +53,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen: propIsOpen, onClose }) => {
         : "What technologies do you use?":
         botText =
           language === "es"
-            ? "Trabajo con HTML, CSS, JavaScript, React, Next.js, TypeScript y CSS puro."
+            ? "Trabajo con HTML, CSS, JavaScript, React, Next.js, TypeScript y React Native."
             : "I work with HTML, CSS, JavaScript, React, Next.js, TypeScript, and pure CSS.";
         break;
       case language === "es"
