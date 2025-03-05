@@ -54,7 +54,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen: propIsOpen, onClose }) => {
         botText =
           language === "es"
             ? "Trabajo con HTML, CSS, JavaScript, React, Next.js, TypeScript y React Native."
-            : "I work with HTML, CSS, JavaScript, React, Next.js, TypeScript, and pure CSS.";
+            : "I work with HTML, CSS, JavaScript, React, Next.js, TypeScript, and React Native.";
         break;
       case language === "es"
         ? "¿Tienes algún proyecto interesante?"
