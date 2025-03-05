@@ -1,5 +1,11 @@
 import React from "react";
-import { FaLinkedin, FaGithub, FaEnvelope, FaPhone } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaEnvelope,
+  FaPhone,
+  FaFilePdf,
+} from "react-icons/fa";
 import styles from "../../styles/socialNetworks.module.css";
 
 const SocialNetworks: React.FC = () => {
@@ -32,6 +38,10 @@ const SocialNetworks: React.FC = () => {
         <a href="tel:+5493515174441" className={styles.link}>
           <FaPhone className={styles.icon} />
           +54 9 351 517-4441
+        </a>
+        <a href="/cv.pdf" download className={styles.link}>
+          <FaFilePdf className={styles.icon} />
+          Download CV
         </a>
       </div>
     </div>
